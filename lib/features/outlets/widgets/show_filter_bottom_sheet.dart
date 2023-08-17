@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nettapp/features/outlets/widgets/filter_form.dart';
 
 void showPromotionBottomSheet(BuildContext context) {
   showModalBottomSheet(
@@ -14,7 +15,7 @@ void showPromotionBottomSheet(BuildContext context) {
               topRight: Radius.circular(20.0),
             ),
           ),
-          height: MediaQuery.of(context).size.height * 0.75,
+          height: MediaQuery.of(context).size.height * 0.53,
           child: const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
             child: Column(
@@ -24,6 +25,7 @@ void showPromotionBottomSheet(BuildContext context) {
                     height: 20,
                   ),
                 ),
+                FilterForm()
               ],
             ),
           ));
