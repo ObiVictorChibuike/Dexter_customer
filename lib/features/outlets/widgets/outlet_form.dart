@@ -4,6 +4,7 @@ import 'package:nettapp/core/constants/lists.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
 import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
+import 'package:nettapp/features/outlets/widgets/alert_action.dart';
 import 'package:nettapp/features/outlets/widgets/drop_down_widget.dart';
 import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/outlets/widgets/form_input_field.dart';
@@ -146,7 +147,27 @@ class _OutletFormState extends State<OutletForm> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: BlueButtonWidget(onTap: () {}, label: "Register"),
+              child: BlueButtonWidget(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomAlertDialog(
+                          title: 'Alert Title',
+                          message: 'This is a customizable alert message.',
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Close'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  label: "Register"),
             ),
             const SizedBox(
               height: 20,
@@ -154,6 +175,62 @@ class _OutletFormState extends State<OutletForm> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomAlertDialog extends StatelessWidget {
+  final String title;
+  final String message;
+  final List<Widget> actions;
+
+  const CustomAlertDialog(
+      {super.key,
+      required this.title,
+      required this.message,
+      required this.actions});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.transparent,
+      content: Container(
+          height: 250,
+          width: 600,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const TextWidget(
+                text: "Outlet Captured",
+                fontWeight: FontWeight.w500,
+                fontSize: 19,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    AlertAction(
+                      onTap: () {},
+                      backgroundColor: AppColors.blue,
+                      label: "New Outlet",
+                      labelColor: Colors.white,
+                    ),
+                    AlertAction(
+                      onTap: () {},
+                      backgroundColor: Colors.white,
+                      label: "Trade Visit",
+                      labelColor: Colors.black,
+                    )
+                  ],
+                ),
+              )
+            ],
+          )),
     );
   }
 }
