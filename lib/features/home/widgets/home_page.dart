@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nettapp/core/widgets/text_widget.dart';
 import 'package:nettapp/features/home/widgets/app_actions.dart';
 import 'package:nettapp/features/auth/widgets/app_bar_row.dart';
 import 'package:nettapp/features/home/widgets/summary_view.dart';
