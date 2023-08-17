@@ -8,18 +8,21 @@ class TextWidget extends StatelessWidget {
       this.fontWeight = FontWeight.normal,
       this.color = Colors.black,
       this.textAlign,
-      this.decoration});
+      this.decoration,
+      this.overflow});
   final String? text;
   final double fontSize;
   final FontWeight fontWeight;
   final Color color;
   final TextAlign? textAlign;
   final TextDecoration? decoration;
+  final TextOverflow? overflow;
   @override
   Widget build(BuildContext context) {
     return Text(
       text!,
       textAlign: textAlign,
+      overflow: overflow,
       style: TextStyle(
           color: color,
           fontWeight: fontWeight,
