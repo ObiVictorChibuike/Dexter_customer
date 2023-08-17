@@ -8,9 +8,11 @@ class OutletFormScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        children: const [AppBarRow(), OutletDetailsForm()],
+        // padding: EdgeInsets.symmetric(horizontal: 20),
+        children: const [AppBarRow(), OutletForm()],
       ),
     );
   }
