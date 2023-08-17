@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dropdown_input: ^0.0.1
   dropdown_textfield: ^1.0.8
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +28,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/lottie/
