@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nettapp/config/router/routes.dart';
 import 'package:nettapp/features/home/widgets/app_action.dart';
 
 class AppActions extends StatelessWidget {
@@ -6,35 +7,41 @@ class AppActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
       child: Column(
         children: [
           AppAction(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.outlets);
+            },
             image: "store",
             label: "View Outlets",
           ),
           AppAction(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.outletForm);
+            },
             image: "add",
             label: "Create a new outlet",
           ),
-          AppAction(
+          const AppAction(
             image: "done",
             label: "Completed visits",
           ),
-          AppAction(
+          const AppAction(
             image: "schedule",
             label: "Scheduled visit",
           ),
-          AppAction(
+          const AppAction(
             image: "products",
             label: "Products",
           ),
-          AppAction(
+          const AppAction(
             image: "competition",
             label: "Competition Reviews",
           ),
-          AppAction(
+          const AppAction(
             image: "competition",
             label: "Download Schedule",
           ),
