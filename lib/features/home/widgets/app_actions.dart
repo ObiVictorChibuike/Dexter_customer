@@ -19,10 +19,6 @@ class AppActions extends StatelessWidget {
             label: "Create a new outlet",
           ),
           AppAction(
-            image: "outlet",
-            label: "Carry out a trade visit",
-          ),
-          AppAction(
             image: "done",
             label: "Completed visits",
           ),
@@ -37,6 +33,10 @@ class AppActions extends StatelessWidget {
           AppAction(
             image: "competition",
             label: "Competition Reviews",
+          ),
+          AppAction(
+            image: "competition",
+            label: "Download Schedule",
           ),
         ],
       ),

@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  dropdown_input: ^0.0.1
+  dropdown_textfield: ^1.0.8
 
 dev_dependencies:
   flutter_test:

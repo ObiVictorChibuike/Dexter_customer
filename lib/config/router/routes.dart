@@ -3,6 +3,8 @@ class Routes {
   static const String login = '/login';
   static const String home = '/home';
   static const String outlets = "/outlets";
+  static const String outletForm = "/outletFOrm";
+
   static const String products = '/products';
   static const String details = '/details';
   static const String todayDetails = '/todayDetails';
