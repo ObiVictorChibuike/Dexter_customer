@@ -30,6 +30,7 @@ class AlertAction extends StatelessWidget {
           child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: TextWidget(
+                fontSize: 14,
                 text: label,
                 color: labelColor,
               )),

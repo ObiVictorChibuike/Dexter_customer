@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nettapp/config/router/routes.dart';
 import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
 import 'package:nettapp/features/outlets/widgets/alert_action.dart';
@@ -57,7 +58,9 @@ class CustomAlertDialog extends StatelessWidget {
                       labelColor: Colors.white,
                     ),
                     AlertAction(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.tradeVisit);
+                      },
                       backgroundColor: Colors.white,
                       label: "Trade Visit",
                       labelColor: Colors.black,

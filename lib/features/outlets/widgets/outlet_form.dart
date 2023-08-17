@@ -4,10 +4,10 @@ import 'package:nettapp/core/constants/lists.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
 import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
-import 'package:nettapp/features/outlets/widgets/custom_alert_dialog.dart';
 import 'package:nettapp/features/outlets/widgets/drop_down_widget.dart';
 import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/outlets/widgets/form_input_field.dart';
+import 'package:nettapp/features/outlets/widgets/show_alert.dart';
 
 class OutletForm extends StatefulWidget {
   const OutletForm({super.key});
@@ -149,23 +149,7 @@ class _OutletFormState extends State<OutletForm> {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: BlueButtonWidget(
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CustomAlertDialog(
-                          title: 'Alert Title',
-                          message: 'This is a customizable alert message.',
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Close'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    showAlert(context);
                   },
                   label: "Register"),
             ),
