@@ -6,6 +6,7 @@ import 'package:nettapp/features/auth/screens/login_screen.dart';
 import 'package:nettapp/features/home/screens/home_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_form_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlets_screen.dart';
+import 'package:nettapp/features/trade_visit/screens/trade_visit_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -31,6 +32,11 @@ class AppRouter {
       case Routes.outlets:
         return MaterialPageRoute(
           builder: (_) => const OutletsScreen(),
+        );
+
+      case Routes.tradeVisit:
+        return MaterialPageRoute(
+          builder: (_) => const TradeVisitFormScreen(),
         );
 
       default:
