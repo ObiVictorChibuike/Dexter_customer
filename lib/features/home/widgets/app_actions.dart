@@ -42,7 +42,7 @@ class AppActions extends StatelessWidget {
             label: "Competition Reviews",
           ),
           const AppAction(
-            image: "competition",
+            image: "download",
             label: "Download Schedule",
           ),
         ],
