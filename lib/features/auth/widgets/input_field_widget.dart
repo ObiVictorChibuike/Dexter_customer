@@ -16,7 +16,8 @@ class InputFieldWidget extends StatelessWidget {
       this.obscureText = false,
       this.suffixIcon,
       this.prefixicon,
-      required this.labelColor});
+      required this.labelColor,
+      this.fillColor = const Color(0xFFEEEEEE)});
   final String label;
   final String hintText;
   final double hintSize;
@@ -28,6 +29,7 @@ class InputFieldWidget extends StatelessWidget {
   final Widget? prefixicon;
   final String? initialValue;
   final Color labelColor;
+  final Color? fillColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,7 +55,7 @@ class InputFieldWidget extends StatelessWidget {
               prefixIcon: prefixicon,
               filled: true,
               suffixIcon: suffixIcon,
-              fillColor: const Color(0xFFEEEEEE),
+              fillColor: fillColor,
               hintStyle: TextStyle(
                   color: Colors.black.withOpacity(0.30000001192092896),
                   fontSize: hintSize),
