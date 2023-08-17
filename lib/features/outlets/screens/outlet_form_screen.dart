@@ -11,7 +11,6 @@ class OutletFormScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        // padding: EdgeInsets.symmetric(horizontal: 20),
         children: const [AppBarRow(), OutletForm()],
       ),
     );

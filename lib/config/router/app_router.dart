@@ -5,6 +5,7 @@ import 'package:nettapp/features/auth/screens/landing_screen.dart';
 import 'package:nettapp/features/auth/screens/login_screen.dart';
 import 'package:nettapp/features/home/screens/home_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_form_screen.dart';
+import 'package:nettapp/features/outlets/screens/outlets_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -27,6 +28,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const OutletFormScreen(),
         );
+      case Routes.outlets:
+        return MaterialPageRoute(
+          builder: (_) => const OutletsScreen(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) => const ErrorScreen(),
