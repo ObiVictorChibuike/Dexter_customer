@@ -5,26 +5,15 @@ import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/trade_visit/widgets/outlet_details.dart';
 import 'package:nettapp/features/trade_visit/widgets/product_details_form.dart';
 
-class TradeVisitForm extends StatefulWidget {
-  const TradeVisitForm({super.key});
+class TradeVisitTabView extends StatefulWidget {
+  const TradeVisitTabView({super.key});
 
   @override
-  State<TradeVisitForm> createState() => _TradeVisitFormState();
+  State<TradeVisitTabView> createState() => _TradeVisitTabViewState();
 }
 
-class _TradeVisitFormState extends State<TradeVisitForm>
+class _TradeVisitTabViewState extends State<TradeVisitTabView>
     with SingleTickerProviderStateMixin {
-  final formfieldkey_1 = GlobalKey<FormFieldState>();
-  final formfieldkey_2 = GlobalKey<FormFieldState>();
-  final formfieldkey_3 = GlobalKey<FormFieldState>();
-  final formfieldkey_4 = GlobalKey<FormFieldState>();
-  final formfieldkey_5 = GlobalKey<FormFieldState>();
-  String? state;
-  String? city;
-  String? channel;
-  String? region;
-  String? subChannel;
-
   late TabController _tabController;
 
   static const List<Tab> myTabs = <Tab>[

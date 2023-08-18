@@ -5,7 +5,7 @@ class Routes {
   static const String outlets = "/outlets";
   static const String outletForm = "/outletForm";
   static const String tradeVisit = '/tradeVisit';
-
+  static const String tradeVisitDetails = "outletTradeVisitDetailsScreen";
   static const String products = '/products';
   static const String details = '/details';
   static const String todayDetails = '/todayDetails';

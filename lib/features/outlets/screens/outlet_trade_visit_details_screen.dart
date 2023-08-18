@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nettapp/features/auth/widgets/app_bar_row.dart';
-import 'package:nettapp/features/trade_visit/widgets/trade_visit_tab_view.dart';
+import 'package:nettapp/features/outlets/widgets/outlet_trade_visit_details_tabview.dart';
 
-class TradeVisitFormScreen extends StatelessWidget {
-  const TradeVisitFormScreen({super.key});
+class OutletTradeVisitDetailsScreen extends StatelessWidget {
+  const OutletTradeVisitDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class TradeVisitFormScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        children: const [AppBarRow(), TradeVisitTabView()],
+        children: const [AppBarRow(), OutletTradeVisitDetailsTabView()],
       ),
     );
   }
