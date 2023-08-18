@@ -10,13 +10,15 @@ class OutletDetails extends StatelessWidget {
       children: [
         OutletDetailsRow(label: "Outlet name", value: "Wines et al"),
         OutletDetailsRow(
-            label: "Outlet name",
+            label: "Address",
             value: "Multilinks, 19 Lewis Fadipe III Lane, Aja Lagos"),
-        OutletDetailsRow(label: "Outlet name", value: "Wines et al"),
-        OutletDetailsRow(label: "Outlet name", value: "Wines et al"),
-        OutletDetailsRow(label: "Outlet name", value: "Wines et al"),
-        OutletDetailsRow(label: "Outlet name", value: "Wines et al"),
-        OutletDetailsRow(label: "Outlet name", value: "Wines et al")
+        OutletDetailsRow(label: "State", value: "Lagos"),
+        OutletDetailsRow(label: "Region", value: "South-West"),
+        OutletDetailsRow(label: "City", value: "Lagos"),
+        OutletDetailsRow(label: "Channel", value: "Off-Channel"),
+        OutletDetailsRow(label: "Sub-Channel", value: "Supermarket"),
+        OutletDetailsRow(label: "Name of Manager", value: "Mr Frank Ellis"),
+        OutletDetailsRow(label: "Phone of Manager", value: "+2340932442231"),
       ],
     );
   }

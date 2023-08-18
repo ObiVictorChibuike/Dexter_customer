@@ -3,6 +3,7 @@ import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
 import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/trade_visit/widgets/outlet_details.dart';
+import 'package:nettapp/features/trade_visit/widgets/product_details_form.dart';
 
 class TradeVisitForm extends StatefulWidget {
   const TradeVisitForm({super.key});
@@ -55,7 +56,7 @@ class _TradeVisitFormState extends State<TradeVisitForm>
             const FormHeaderWidget(title: "Trade Visit Form"),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50),
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: TabBar(
                 controller: _tabController,
                 indicatorColor: AppColors.blue,
@@ -69,7 +70,7 @@ class _TradeVisitFormState extends State<TradeVisitForm>
                 controller: _tabController,
                 children: const [
                   OutletDetails(),
-                  Icon(Icons.directions_transit),
+                  ProductDetailsForm(),
                 ],
               ),
             ),
