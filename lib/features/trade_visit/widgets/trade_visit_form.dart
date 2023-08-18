@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
 import 'package:nettapp/features/outlets/widgets/form_header.dart';
+import 'package:nettapp/features/trade_visit/widgets/outlet_details.dart';
 
 class TradeVisitForm extends StatefulWidget {
   const TradeVisitForm({super.key});
@@ -67,7 +68,7 @@ class _TradeVisitFormState extends State<TradeVisitForm>
               child: TabBarView(
                 controller: _tabController,
                 children: const [
-                  Icon(Icons.directions_car),
+                  OutletDetails(),
                   Icon(Icons.directions_transit),
                 ],
               ),

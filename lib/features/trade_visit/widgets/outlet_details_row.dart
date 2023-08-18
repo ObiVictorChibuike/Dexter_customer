@@ -7,14 +7,27 @@ class OutletDetailsRow extends StatelessWidget {
   final String value;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextWidget(text: label),
-        TextWidget(
-          text: value,
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: TextWidget(
+              text: label,
+              textAlign: TextAlign.left,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Flexible(
+            child: TextWidget(
+              textAlign: TextAlign.right,
+              text: value,
+              color: Colors.black.withOpacity(0.5),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
