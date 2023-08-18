@@ -25,6 +25,7 @@ class OutletDetailsRow extends StatelessWidget {
             child: TextWidget(
               textAlign: TextAlign.right,
               text: value,
+              fontSize: 14,
               color: Colors.black.withOpacity(0.5),
             ),
           )

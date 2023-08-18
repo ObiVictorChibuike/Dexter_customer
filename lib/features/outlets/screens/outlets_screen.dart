@@ -26,7 +26,7 @@ class OutletsScreen extends StatelessWidget {
           size: 30,
         ),
         onPressed: () {
-          showPromotionBottomSheet(context);
+          showFilter(context);
         },
       ),
     );

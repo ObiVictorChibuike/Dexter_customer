@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nettapp/features/outlets/widgets/filter_form.dart';
 
-void showPromotionBottomSheet(BuildContext context) {
+void showFilter(BuildContext context) {
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     context: context,

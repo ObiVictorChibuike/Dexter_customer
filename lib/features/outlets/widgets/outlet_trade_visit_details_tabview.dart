@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nettapp/core/app_colors/app_colors.dart';
+import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
 import 'package:nettapp/features/outlets/widgets/trade_visit_details_widget.dart';
 import 'package:nettapp/features/trade_visit/widgets/outlet_details.dart';
 
@@ -57,6 +58,14 @@ class _OutletTradeVisitDetailsTabViewState
               children: const [OutletDetails(), TradeVisitDetailsWidget()],
             ),
           ),
+          SizedBox(
+              width: 150,
+              height: 60,
+              child: BlueButtonWidget(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  label: "Back to Outlets"))
         ],
       ),
     );
