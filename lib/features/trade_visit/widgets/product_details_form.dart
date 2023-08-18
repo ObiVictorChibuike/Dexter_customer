@@ -6,6 +6,7 @@ import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
 import 'package:nettapp/features/outlets/widgets/drop_down_widget.dart';
 import 'package:nettapp/features/outlets/widgets/form_input_field.dart';
 import 'package:nettapp/features/outlets/widgets/horizontal_line.dart';
+import 'package:nettapp/features/trade_visit/widgets/outlet_details_row.dart';
 import 'package:nettapp/features/trade_visit/widgets/yes_no_buttons.dart';
 
 class ProductDetailsForm extends StatefulWidget {
@@ -62,6 +63,10 @@ class _ProductDetailsFormState extends State<ProductDetailsForm> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const OutletDetailsRow(
+                  label: "Total time spent", value: "1:00:00"),
+              const OutletDetailsRow(
+                  label: "Outlet Name", value: "Wines et al"),
               const Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 10),
                 child: Row(

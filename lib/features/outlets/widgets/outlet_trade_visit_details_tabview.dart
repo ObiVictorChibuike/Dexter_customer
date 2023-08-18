@@ -3,6 +3,7 @@ import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
 import 'package:nettapp/features/outlets/widgets/trade_visit_details_widget.dart';
 import 'package:nettapp/features/trade_visit/widgets/outlet_details.dart';
+import 'package:nettapp/features/trade_visit/widgets/outlet_details_row.dart';
 
 class OutletTradeVisitDetailsTabView extends StatefulWidget {
   const OutletTradeVisitDetailsTabView({super.key});
