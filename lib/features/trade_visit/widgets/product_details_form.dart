@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nettapp/config/router/routes.dart';
 
 import 'package:nettapp/core/constants/lists.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
@@ -217,7 +218,14 @@ class _ProductDetailsFormState extends State<ProductDetailsForm> {
                   // const TextWidget(
 
                   Column(
-                    children: [BlueButtonWidget(onTap: () {}, label: "Save")],
+                    children: [
+                      BlueButtonWidget(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.productsListScreen);
+                          },
+                          label: "Save")
+                    ],
                   ),
                 ]),
               ),
