@@ -25,7 +25,10 @@ class AppActions extends StatelessWidget {
             image: "add",
             label: "Create a new outlet",
           ),
-          const AppAction(
+          AppAction(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.completedVisits);
+            },
             image: "done",
             label: "Completed visits",
           ),

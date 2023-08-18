@@ -7,6 +7,7 @@ import 'package:nettapp/features/home/screens/home_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_form_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_trade_visit_details_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlets_screen.dart';
+import 'package:nettapp/features/trade_visit/screens/completed_visits_screen.dart';
 import 'package:nettapp/features/trade_visit/screens/trade_visit_screen.dart';
 
 class AppRouter {
@@ -42,6 +43,10 @@ class AppRouter {
       case Routes.tradeVisitDetails:
         return MaterialPageRoute(
           builder: (_) => const OutletTradeVisitDetailsScreen(),
+        );
+      case Routes.completedVisits:
+        return MaterialPageRoute(
+          builder: (_) => const CompletedVisitsScreen(),
         );
 
       default:
