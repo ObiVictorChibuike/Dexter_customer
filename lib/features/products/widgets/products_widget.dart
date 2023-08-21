@@ -11,7 +11,7 @@ class ProductsWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           margin: const EdgeInsets.only(top: 50, bottom: 20),
           decoration: const BoxDecoration(color: AppColors.blue),
           child: Row(

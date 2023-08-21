@@ -11,7 +11,7 @@ class ProductItem extends StatelessWidget {
       decoration: const BoxDecoration(
           border:
               Border(bottom: BorderSide(width: 2, color: AppColors.inputGrey))),
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       margin: const EdgeInsets.only(top: 10),
       child: GestureDetector(
         onTap: onTap,
