@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/trade_visit/widgets/completed_visits_widget.dart';
 
 class CompletedVisitsList extends StatefulWidget {
@@ -14,10 +13,7 @@ class _CompletedVisitsListState extends State<CompletedVisitsList> {
   @override
   Widget build(BuildContext context) {
     return const Column(
-      children: [
-        FormHeaderWidget(title: "Completed Visits"),
-        CompletedVisitsWidget()
-      ],
+      children: [CompletedVisitsWidget()],
     );
   }
 }

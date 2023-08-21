@@ -20,7 +20,7 @@ class _TradeVisitTabViewState extends State<TradeVisitTabView>
     Tab(
       text: "Outlet Details",
     ),
-    Tab(text: "Trade Visits"),
+    Tab(text: "Trade Visit"),
   ];
 
   @override

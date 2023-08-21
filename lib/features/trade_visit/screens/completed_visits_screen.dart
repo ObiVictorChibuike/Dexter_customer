@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/features/auth/widgets/app_bar_row.dart';
-import 'package:nettapp/features/trade_visit/widgets/completed_visits_filter.dart';
 import 'package:nettapp/features/trade_visit/widgets/completed_visits_list.dart';
 
 class CompletedVisitsScreen extends StatelessWidget {
@@ -18,16 +16,6 @@ class CompletedVisitsScreen extends StatelessWidget {
           ),
           CompletedVisitsList()
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.blue,
-        child: const Icon(
-          Icons.filter_list,
-          size: 30,
-        ),
-        onPressed: () {
-          showCompletedVisitsFilter(context);
-        },
       ),
     );
   }

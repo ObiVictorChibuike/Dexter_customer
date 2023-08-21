@@ -32,7 +32,10 @@ class AppActions extends StatelessWidget {
             image: "done",
             label: "Completed visits",
           ),
-          const AppAction(
+          AppAction(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.schedule);
+            },
             image: "schedule",
             label: "Scheduled visit",
           ),

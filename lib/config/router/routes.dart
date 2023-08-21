@@ -8,6 +8,7 @@ class Routes {
   static const String tradeVisitDetails = "outletTradeVisitDetailsScreen";
   static const String completedVisits = '/completedVisits';
   static const String productsListScreen = '/productsListScreen';
+  static const String schedule = '/schedule';
 
   // static const String products = '/products';
   static const String details = '/details';

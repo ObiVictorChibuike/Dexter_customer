@@ -7,6 +7,7 @@ import 'package:nettapp/features/home/screens/home_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_form_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_trade_visit_details_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlets_screen.dart';
+import 'package:nettapp/features/scheduled%20visits/presentation/pages/scheduled_visits_screen.dart';
 import 'package:nettapp/features/trade_visit/screens/completed_visits_screen.dart';
 import 'package:nettapp/features/trade_visit/screens/product_list_screen.dart';
 import 'package:nettapp/features/trade_visit/screens/trade_visit_screen.dart';
@@ -52,6 +53,11 @@ class AppRouter {
       case Routes.productsListScreen:
         return MaterialPageRoute(
           builder: (_) => const ProductListScreen(),
+        );
+
+      case Routes.schedule:
+        return MaterialPageRoute(
+          builder: (_) => const ScheduledVisitsScreen(),
         );
 
       default:
