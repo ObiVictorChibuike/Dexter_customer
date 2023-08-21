@@ -54,7 +54,7 @@ class _TradeVisitTabViewState extends State<TradeVisitTabView>
               ),
             ),
             SizedBox(
-              height: 500,
+              height: 600,
               child: TabBarView(
                 controller: _tabController,
                 children: const [

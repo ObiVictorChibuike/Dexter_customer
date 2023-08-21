@@ -16,6 +16,7 @@ dependencies:
   dropdown_input: ^0.0.1
   dropdown_textfield: ^1.0.8
   lottie: ^2.6.0
+  indexed: ^0.0.8
 
 dev_dependencies:
   flutter_test:
