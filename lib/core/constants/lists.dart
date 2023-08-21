@@ -727,3 +727,10 @@ List<DropDownValueModel> getDaysOfMonth() {
   final days = daysInMonth.map((e) => DropDownValueModel(name: e, value: e));
   return days.toList();
 }
+
+List<String> daysOfTheWeek = ["MON", "TUE", "WED", "THU", "FRI"];
+
+List<DropDownValueModel> getDaysOfTheWeek() {
+  final days = daysOfTheWeek.map((e) => DropDownValueModel(name: e, value: e));
+  return days.toList();
+}

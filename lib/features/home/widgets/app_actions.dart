@@ -39,7 +39,10 @@ class AppActions extends StatelessWidget {
             image: "schedule",
             label: "Scheduled visit",
           ),
-          const AppAction(
+          AppAction(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.skuScreen);
+            },
             image: "products",
             label: "Products",
           ),

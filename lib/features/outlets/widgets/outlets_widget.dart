@@ -19,7 +19,7 @@ class OutletsWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextWidget(
-                text: "Outlet News",
+                text: "Outlet Name",
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
