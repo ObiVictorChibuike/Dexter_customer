@@ -16,10 +16,13 @@ class FormInputFieldWidget extends StatelessWidget {
       this.obscureText = false,
       this.suffixIcon,
       this.prefixicon,
-      required this.isMandatory});
+      required this.isMandatory,
+      this.maxLines = 1,
+      this.verticalContentPadding = 0});
   final String label;
   final String hintText;
   final double hintSize;
+  final double? verticalContentPadding;
   final void Function(String?) onChanged;
   final String? Function(String?)? validator;
   final GlobalKey<FormFieldState> textFieldkey;
@@ -27,11 +30,12 @@ class FormInputFieldWidget extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixicon;
   final String? initialValue;
+  final int maxLines;
   final bool isMandatory;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 25, top: 20),
+      padding: const EdgeInsets.only(left: 20, right: 25, top: 40),
       child: SizedBox(
         width: double.infinity,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -60,14 +64,14 @@ class FormInputFieldWidget extends StatelessWidget {
             onChanged: onChanged,
             validator: validator,
             obscureText: obscureText,
+            maxLines: maxLines,
             decoration: InputDecoration(
               prefixIcon: prefixicon,
               suffixIcon: suffixIcon,
               hintStyle:
                   TextStyle(color: AppColors.hintColor, fontSize: hintSize),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20, vertical: verticalContentPadding!),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: const BorderSide(

@@ -15,19 +15,22 @@ class ProductItem extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10),
       child: GestureDetector(
         onTap: onTap,
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextWidget(
-              text: "Outlet News",
+            const TextWidget(
+              text: "Wines",
               fontSize: 14,
             ),
-            TextWidget(
-              text: "Last Visited",
-              fontSize: 14,
+            Transform.translate(
+              offset: const Offset(20, 0),
+              child: const TextWidget(
+                text: "Cubana hotels.",
+                fontSize: 14,
+              ),
             ),
-            TextWidget(
-              text: "Last Visited",
+            const TextWidget(
+              text: "Hennesey",
               fontSize: 14,
             ),
           ],

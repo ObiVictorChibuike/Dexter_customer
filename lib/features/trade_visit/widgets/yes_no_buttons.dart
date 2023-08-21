@@ -28,7 +28,7 @@ class _YesNoRadioButtonsState extends State<YesNoRadioButtons> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, top: 20),
+      padding: const EdgeInsets.only(left: 25.0, top: 50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

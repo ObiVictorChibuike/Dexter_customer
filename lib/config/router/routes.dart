@@ -10,6 +10,7 @@ class Routes {
   static const String productsListScreen = '/productsListScreen';
   static const String schedule = '/schedule';
   static const String skuScreen = '/skuScreen';
+  static const String competitionReviewScreen = '/competitionReviewScreen';
 
   // static const String products = '/products';
   static const String details = '/details';

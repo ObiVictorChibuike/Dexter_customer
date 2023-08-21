@@ -46,7 +46,10 @@ class AppActions extends StatelessWidget {
             image: "products",
             label: "Products",
           ),
-          const AppAction(
+          AppAction(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.competitionReviewScreen);
+            },
             image: "competition",
             label: "Competition Reviews",
           ),

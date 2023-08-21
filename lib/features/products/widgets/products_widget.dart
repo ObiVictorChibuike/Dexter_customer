@@ -23,7 +23,7 @@ class ProductsWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               Transform.translate(
-                offset: const Offset(-15, 0),
+                offset: const Offset(-10, 0),
                 child: const TextWidget(
                   text: "Outlet",
                   color: Colors.white,

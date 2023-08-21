@@ -3,6 +3,7 @@ import 'package:nettapp/config/router/routes.dart';
 import 'package:nettapp/core/widgets/error_screen.dart';
 import 'package:nettapp/features/auth/screens/landing_screen.dart';
 import 'package:nettapp/features/auth/screens/login_screen.dart';
+import 'package:nettapp/features/competition%20review/screens/competition_review_screen.dart';
 import 'package:nettapp/features/home/screens/home_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_form_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_trade_visit_details_screen.dart';
@@ -64,6 +65,10 @@ class AppRouter {
       case Routes.skuScreen:
         return MaterialPageRoute(
           builder: (_) => const SkuListScreen(),
+        );
+      case Routes.competitionReviewScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CompetitionReviewScreen(),
         );
 
       default:
