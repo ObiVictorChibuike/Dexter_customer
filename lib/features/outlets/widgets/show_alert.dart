@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nettapp/features/outlets/widgets/custom_alert_dialog.dart';
 
-showAlert(context) {
+showAlert(context, void Function() onTap, void Function() onTap1) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -15,7 +15,7 @@ showAlert(context) {
             },
             child: const Text('Close'),
           ),
-        ],
+        ], onTap: onTap, onTap1: onTap1,
       );
     },
   );

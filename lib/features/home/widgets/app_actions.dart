@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nettapp/config/router/routes.dart';
 import 'package:nettapp/features/home/widgets/app_action.dart';
+import 'package:nettapp/features/scheduled%20visits/controller/controller.dart';
 
 class AppActions extends StatelessWidget {
   const AppActions({super.key});
@@ -34,6 +36,8 @@ class AppActions extends StatelessWidget {
           ),
           AppAction(
             onTap: () {
+              final visitController = Get.put(VisitController());
+              visitController.getOutletScheduleList();
               Navigator.pushNamed(context, Routes.schedule);
             },
             image: "schedule",

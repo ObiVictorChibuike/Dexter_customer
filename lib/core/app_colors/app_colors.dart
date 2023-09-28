@@ -8,4 +8,6 @@ class AppColors {
   static const Color linkblue = Color(0xff3374FF);
   static const Color textGrey = Color(0xff868fae);
   static const Color hintColor = Color(0xffAEB0C3);
+  static const Color white = Color(0xffffffff);
+  static const Color black = Color(0xff000000);
 }

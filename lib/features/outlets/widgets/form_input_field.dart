@@ -11,13 +11,13 @@ class FormInputFieldWidget extends StatelessWidget {
       required this.hintText,
       this.hintSize = 14,
       required this.onChanged,
-      this.validator,
-      required this.textFieldkey,
+      this.validator, this.textFieldkey,
       this.obscureText = false,
       this.suffixIcon,
       this.prefixicon,
       required this.isMandatory,
       this.maxLines = 1,
+      this.keyboardType,
       this.verticalContentPadding = 0});
   final String label;
   final String hintText;
@@ -25,13 +25,14 @@ class FormInputFieldWidget extends StatelessWidget {
   final double? verticalContentPadding;
   final void Function(String?) onChanged;
   final String? Function(String?)? validator;
-  final GlobalKey<FormFieldState> textFieldkey;
+  final GlobalKey<FormFieldState>? textFieldkey;
   final bool obscureText;
   final Widget? suffixIcon;
   final Widget? prefixicon;
   final String? initialValue;
   final int maxLines;
   final bool isMandatory;
+  final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -64,7 +65,7 @@ class FormInputFieldWidget extends StatelessWidget {
             onChanged: onChanged,
             validator: validator,
             obscureText: obscureText,
-            maxLines: maxLines,
+            maxLines: maxLines, keyboardType: keyboardType,
             decoration: InputDecoration(
               prefixIcon: prefixicon,
               suffixIcon: suffixIcon,
@@ -76,14 +77,14 @@ class FormInputFieldWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 borderSide: const BorderSide(
                   color: Color.fromARGB(255, 255, 0, 0),
-                  width: 2.0,
+                  width: 1.0,
                 ),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(
                   color: Color.fromARGB(255, 255, 0, 0),
-                  width: 2.0,
+                  width: 1.0,
                 ),
               ),
               focusedBorder: OutlineInputBorder(

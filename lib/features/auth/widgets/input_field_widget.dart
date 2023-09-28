@@ -9,24 +9,24 @@ class InputFieldWidget extends StatelessWidget {
       required this.label,
       this.initialValue,
       required this.hintText,
-      this.hintSize = 14,
-      required this.onChanged,
+      this.hintSize = 14, this.onChanged,
       this.validator,
-      required this.textFieldkey,
+      this.textFieldkey,
       this.obscureText = false,
       this.suffixIcon,
       this.prefixicon,
       required this.labelColor,
-      this.fillColor = const Color(0xFFEEEEEE)});
+      this.fillColor = const Color(0xFFEEEEEE), this.controller});
   final String label;
   final String hintText;
   final double hintSize;
-  final void Function(String?) onChanged;
+  final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
-  final GlobalKey<FormFieldState> textFieldkey;
+  final GlobalKey<FormFieldState>? textFieldkey;
   final bool obscureText;
   final Widget? suffixIcon;
   final Widget? prefixicon;
+  final TextEditingController? controller;
   final String? initialValue;
   final Color labelColor;
   final Color? fillColor;
@@ -46,6 +46,7 @@ class InputFieldWidget extends StatelessWidget {
             ),
           ),
           TextFormField(
+            controller: controller,
             key: textFieldkey,
             initialValue: initialValue,
             onChanged: onChanged,

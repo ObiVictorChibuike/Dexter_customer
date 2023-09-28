@@ -8,12 +8,12 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [AppBarRow(), LineWidget(), LoginForm()],
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: ListView(
+          children: const [AppBarRow(), LineWidget(), LoginForm()],
         ),
       ),
     );

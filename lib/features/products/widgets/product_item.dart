@@ -3,7 +3,10 @@ import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key, this.onTap});
+  final String productName;
+  final String outletName;
+  final String productBrand;
+  const ProductItem({super.key, this.onTap, required this.productName, required this.outletName, required this.productBrand});
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
@@ -18,19 +21,16 @@ class ProductItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TextWidget(
-              text: "Wines",
+             TextWidget(
+              text: productBrand,
               fontSize: 14,
             ),
-            Transform.translate(
-              offset: const Offset(20, 0),
-              child: const TextWidget(
-                text: "Cubana hotels.",
-                fontSize: 14,
-              ),
+            TextWidget(
+              text: outletName,
+              fontSize: 14,
             ),
-            const TextWidget(
-              text: "Hennesey",
+             TextWidget(
+              text: productName,
               fontSize: 14,
             ),
           ],

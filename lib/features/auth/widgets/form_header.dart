@@ -9,7 +9,7 @@ class FormHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
-      child: Column(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextWidget(
             text: title,

@@ -35,7 +35,8 @@ final List<String> nigerianStates = [
   'Edo',
   'Ekiti',
   'Enugu',
-  'FCT (Federal Capital Territory)',
+  'FCT (Abuja)',
+  // 'FCT (Federal Capital Territory)',
   'Gombe',
   'Imo',
   'Jigawa',
@@ -67,7 +68,7 @@ List<DropDownValueModel> states() {
 }
 
 List<String> majorCities = [
-  'Lagos',
+  'Ikeja',
   'Abuja',
   'Kano',
   'Ibadan',

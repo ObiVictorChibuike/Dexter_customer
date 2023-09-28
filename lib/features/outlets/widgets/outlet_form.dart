@@ -1,13 +1,20 @@
+import 'dart:developer';
+
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/constants/lists.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
+import 'package:nettapp/data/local_storage_data_model/channel/get_all_channel_response_model.dart';
+import 'package:nettapp/data/local_storage_services/local_storage.dart';
 import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
+import 'package:nettapp/features/home/controller/home_controller.dart';
 import 'package:nettapp/features/outlets/widgets/drop_down_widget.dart';
 import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/outlets/widgets/form_input_field.dart';
-import 'package:nettapp/features/outlets/widgets/show_alert.dart';
+import 'package:nettapp/features/trade_visit/widgets/loader.dart';
 
 class OutletForm extends StatefulWidget {
   const OutletForm({super.key});
@@ -17,148 +24,238 @@ class OutletForm extends StatefulWidget {
 }
 
 class _OutletFormState extends State<OutletForm> {
-  final formfieldkey_1 = GlobalKey<FormFieldState>();
-  final formfieldkey_2 = GlobalKey<FormFieldState>();
-  final formfieldkey_3 = GlobalKey<FormFieldState>();
-  final formfieldkey_4 = GlobalKey<FormFieldState>();
-  final formfieldkey_5 = GlobalKey<FormFieldState>();
-  String? state;
-  String? city;
-  String? channel;
-  String? region;
-  String? subChannel;
+  final formKey = GlobalKey <FormState>();
+  List<GetAllChannelResponseModel>? subChannel = <GetAllChannelResponseModel>[];
+  List<String> states = <String>[];
+  List<String> cities = <String>[];
+  void getState()async{
+    final location = await LocalCachedData.instance.getAllLocationList();
+    states = location.map((e) => e.state!).toSet().toList();
+    setState(() {});
+  }
+  void getCities()async{
+    final location = await LocalCachedData.instance.getAllLocationList();
+    cities = location.map((e) => e.city!).toSet().toList();
+    if(cities.isEmpty){
+      log("Message");
+    }else{
+      log("Ahh");
+    }
+    setState(() {});
+  }
+
+
+  @override
+  void initState() {
+    getState();
+    getCities();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedContainer(
-      content: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const FormHeaderWidget(title: "Register Outlet"),
-            const Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 10),
-              child: Row(
-                children: [
-                  TextWidget(
-                    text: "'*'",
-                    color: Colors.red,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  TextWidget(
-                    text: "Mandatory fields",
-                    fontSize: 12,
-                    color: Color.fromARGB(255, 107, 106, 106),
-                  ),
-                ],
-              ),
-            ),
-            FormInputFieldWidget(
-                isMandatory: true,
-                label: "Outlet name",
-                hintText: "",
-                onChanged: (val) {},
-                textFieldkey: formfieldkey_1),
-            FormInputFieldWidget(
-                isMandatory: true,
-                label: "Address",
-                hintText: "",
-                onChanged: (val) {},
-                textFieldkey: formfieldkey_2),
-            DropDownInput(
-              isMandatory: true,
-              onChanged: (val) {
-                state = val.name;
-                setState(() {});
-              },
-              label: "State",
-              options: states(),
-              enableSearch: true,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 4, top: 15, left: 22),
-              child: TextWidget(
-                text: "Region:",
-                fontSize: 15,
-                color: Color.fromARGB(255, 110, 111, 117),
-              ),
-            ),
-            Center(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 45,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.inputBorder),
-                  borderRadius: BorderRadius.circular(5),
+    return GetBuilder<HomeController>(
+      init: HomeController(),
+        builder: (controller){
+          String region = "";
+      return OutlinedContainer(
+        content: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const FormHeaderWidget(title: "Register Outlet"),
+              const Padding(
+                padding: EdgeInsets.only(left: 15.0, top: 10),
+                child: Row(
+                  children: [
+                    TextWidget(
+                      text: "'*'",
+                      color: Colors.red,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    TextWidget(
+                      text: "Mandatory fields",
+                      fontSize: 12,
+                      color: Color.fromARGB(255, 107, 106, 106),
+                    ),
+                  ],
                 ),
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0, top: 12),
-                    child: TextWidget(text: getRegion(state))),
               ),
-            ),
-            DropDownInput(
-              isMandatory: true,
-              onChanged: (val) {
-                city = val.name;
-              },
-              label: "City",
-              enableSearch: true,
-              options: cities(),
-            ),
-            DropDownInput(
+              FormInputFieldWidget(
+                  isMandatory: true,
+                  label: "Outlet name",
+                  hintText: "", validator: (value){
+                    if(value!.isEmpty){
+                      return "This field is required";
+                    }
+                    return null;
+                    },
+                  onChanged: (val) {
+                    controller.name = val;
+                  },
+              ),
+              FormInputFieldWidget(
+                  isMandatory: true,
+                  label: "Address",
+                  hintText: "", validator: (value){
+                    if(value!.isEmpty){
+                      return "This field is required";
+                    }
+                    return null;
+                    },
+                  onChanged: (val) {
+                    controller.address = val;
+                  },
+              ),
+              DropDownInput(
+                isMandatory: true,
+                onChanged: (val) async {
+                 await LocalCachedData.instance.getAllLocationList().then((value){
+                    setState(() async {
+                      final states = value.map((element) => element.state).toList();
+                      final index = states.indexWhere((element) => element!.toLowerCase() == val.value.toString().toLowerCase());
+                      region = value[index].region ?? "";
+                      log(region);
+                    });
+                  });
+                },
+                label: "State",
+                options: states == [] ? [] : states.map((e) => DropDownValueModel(name: e.toString(), value: e.toString())).toList(),
+                enableSearch: true,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 4, top: 15, left: 22),
+                child: TextWidget(
+                  text: "Region:",
+                  fontSize: 15,
+                  color: Color.fromARGB(255, 110, 111, 117),
+                ),
+              ),
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  height: 45,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.inputBorder),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0, top: 12),
+                      child: TextWidget(text: region
+                      // getRegion(controller.state)
+                      )),
+                ),
+              ),
+              DropDownInput(
                 isMandatory: true,
                 onChanged: (val) {
-                  channel = val.name;
+                  controller.city = val.name;
                 },
-                label: "Channel",
-                options: channels),
-            DropDownInput(
-              isMandatory: true,
-              onChanged: (val) {
-                subChannel = val.name;
-              },
-              label: "Sub Channels",
-              enableSearch: true,
-              options: subChannels(),
-            ),
-            FormInputFieldWidget(
-                isMandatory: false,
-                label: "Name of Manager",
-                hintText: "",
-                onChanged: (val) {},
-                textFieldkey: formfieldkey_3),
-            FormInputFieldWidget(
-                isMandatory: false,
-                label: "Phone Number of Manager",
-                hintText: "",
-                onChanged: (val) {},
-                textFieldkey: formfieldkey_4),
-            FormInputFieldWidget(
-                isMandatory: false,
-                label: "Supplier(s)",
-                hintText: "",
-                onChanged: (val) {},
-                textFieldkey: formfieldkey_5),
-            const SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: BlueButtonWidget(
-                  onTap: () {
-                    showAlert(context);
+                label: "City",
+                enableSearch: true,
+                options: cities == [] ? [] : cities.map((e) => DropDownValueModel(name: e, value: e)).toList(),
+              ),
+              DropDownInput(
+                  isMandatory: true,
+                  onChanged: (val) async {
+                    controller.channel = val.name;
+                    if(controller.channel == "On trade"){
+                      final data = await LocalCachedData.instance.getAllChannelList();
+                      subChannel = data.where((e) => e.channel!.toLowerCase() == "on trade").toList();
+                      setState(() {});
+                    }else if(controller.channel == "Off trade"){
+                      final data = await LocalCachedData.instance.getAllChannelList();
+                       subChannel = data.where((e) => e.channel!.toLowerCase() == "off trade").toList();
+                      setState(() {});
+                    }
                   },
-                  label: "Register"),
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
+                  label: "Channel",
+                  options: channels
+              ),
+              DropDownInput(
+                isMandatory: true,
+                onChanged: (val) {
+                  controller.subChannel = val.name;
+                  setState(() {});
+                },
+                label: "Sub Channels",
+                enableSearch: true,
+                options: subChannel == [] ? [] : subChannel!.map((e) => DropDownValueModel(name: e.subChannel!, value: e.subChannel)).toList() ,
+              ),
+              FormInputFieldWidget(
+                  isMandatory: false,
+                  label: "Name of Manager",
+                  hintText: "", validator: (value){
+                    if(value!.isEmpty){
+                      return "This field is required";
+                    }
+                    return null;
+                    },
+                  onChanged: (val) {
+                    controller.managerName = val;
+                  },
+              ),
+              FormInputFieldWidget(
+                  isMandatory: false,
+                  label: "Phone Number of Manager",
+                  hintText: "", validator: (value){
+                    if(value!.isEmpty){
+                      return "This field is required";
+                    }return null;
+                    },
+                  onChanged: (val) {
+                    controller.managerPhoneNumber = val;
+                  },
+              ),
+              FormInputFieldWidget(
+                  isMandatory: false,
+                  label: "Supplier(s)",
+                  hintText: "", validator: (value){
+                if(value!.isEmpty){
+                  return "This field is required";
+                }return null;
+              },
+                onChanged: (val) {
+                  controller.supplierName = val;
+                },
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: BlueButtonWidget(
+                    onTap: () async {
+                      final outletList = await LocalCachedData.instance.getAllCreatedOutletList();
+                      final list = outletList.map((element) => element.name?.toLowerCase()).toList();
+                      if(controller.name != null && controller.name != "" && list.contains(controller.name!.toLowerCase())){
+                        Get.snackbar("Error", "Outlet already exist", backgroundColor: Colors.red, colorText: Colors.white);
+                      }else if(controller.name != null && controller.name != "" && !list.contains(controller.name!.toLowerCase())){
+                        if(region == ""){
+                          Get.snackbar("Error", "Please select a state and region", colorText: AppColors.white, backgroundColor: Colors.red);
+                        } else{
+                          if(formKey.currentState!.validate()){
+                            Loader.progressIndicator(Get.context);
+                            Future.delayed(const Duration(seconds: 5), () async {
+                              await controller.createOutlet(region: getRegion(controller.state));
+                            });
+                          }
+                        }
+                      }
+                    },
+                    label: "Register"),
+              ),
+              const SizedBox(
+                height: 20,
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

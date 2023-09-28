@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nettapp/data/local_storage_data_model/trade_visit/local_storage_tradevisit_model.dart';
 import 'package:nettapp/features/trade_visit/widgets/outlet_details_row.dart';
 
 class ProductDetailsAlert extends StatelessWidget {
-  const ProductDetailsAlert({super.key});
+  final ListTradeVisitResponseModel? tradeList;
+  const ProductDetailsAlert({super.key, this.tradeList});
 
   @override
   Widget build(BuildContext context) {

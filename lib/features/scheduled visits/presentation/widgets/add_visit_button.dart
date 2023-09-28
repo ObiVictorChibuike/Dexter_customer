@@ -15,7 +15,7 @@ class AddVisitButton extends StatelessWidget {
           GestureDetector(
             onTap: onTap,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                   color: AppColors.blue,
                   borderRadius: BorderRadius.circular(10)),
@@ -23,7 +23,7 @@ class AddVisitButton extends StatelessWidget {
                 children: [
                   TextWidget(
                     text: "Add visit",
-                    fontSize: 20,
+                    fontSize: 15,
                     color: Colors.white,
                   ),
                   Icon(

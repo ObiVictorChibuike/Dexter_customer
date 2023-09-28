@@ -4,7 +4,6 @@ import 'package:nettapp/core/widgets/error_screen.dart';
 import 'package:nettapp/features/auth/screens/landing_screen.dart';
 import 'package:nettapp/features/auth/screens/login_screen.dart';
 import 'package:nettapp/features/competition%20review/screens/competition_review_screen.dart';
-import 'package:nettapp/features/home/screens/home_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_form_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlet_trade_visit_details_screen.dart';
 import 'package:nettapp/features/outlets/screens/outlets_screen.dart';
@@ -12,7 +11,6 @@ import 'package:nettapp/features/products/screens/sku_list.dart';
 import 'package:nettapp/features/scheduled%20visits/presentation/pages/scheduled_visits_screen.dart';
 import 'package:nettapp/features/trade_visit/screens/completed_visits_screen.dart';
 import 'package:nettapp/features/trade_visit/screens/product_list_screen.dart';
-import 'package:nettapp/features/trade_visit/screens/trade_visit_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -22,14 +20,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const LandingScreen(),
         );
-
       case Routes.login:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
-        );
-      case Routes.home:
-        return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
         );
       case Routes.outletForm:
         return MaterialPageRoute(
@@ -39,11 +32,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const OutletsScreen(),
         );
-
-      case Routes.tradeVisit:
-        return MaterialPageRoute(
-          builder: (_) => const TradeVisitFormScreen(),
-        );
+      // case Routes.tradeVisit:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const TradeVisitFormScreen(),
+      //   );
       case Routes.tradeVisitDetails:
         return MaterialPageRoute(
           builder: (_) => const OutletTradeVisitDetailsScreen(),

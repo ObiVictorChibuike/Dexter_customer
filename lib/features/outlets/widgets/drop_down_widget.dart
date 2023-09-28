@@ -78,14 +78,13 @@ class _DropDownInputState extends State<DropDownInput> {
                     borderSide: const BorderSide(color: AppColors.inputBorder)),
               ),
               validator: (value) {
-                if (value == null) {
-                  return "Required field";
+                if (value == null || value == "") {
+                  return "This field is required";
                 } else {
                   return null;
                 }
               },
               dropDownItemCount: 6,
-
               dropDownList: widget.options,
               onChanged: widget.onChanged,
             ),

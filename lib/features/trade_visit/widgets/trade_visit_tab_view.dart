@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
+import 'package:nettapp/data/local_storage_data_model/outlets/local_storage_outlet_model.dart';
 import 'package:nettapp/features/outlets/widgets/form_header.dart';
 import 'package:nettapp/features/trade_visit/widgets/outlet_details.dart';
 import 'package:nettapp/features/trade_visit/widgets/product_details_form.dart';
 
 class TradeVisitTabView extends StatefulWidget {
-  const TradeVisitTabView({super.key});
+  final OutletRequestModelResponse outletRequestModelResponse;
+  const TradeVisitTabView({super.key, required this.outletRequestModelResponse});
 
   @override
   State<TradeVisitTabView> createState() => _TradeVisitTabViewState();
@@ -57,9 +59,9 @@ class _TradeVisitTabViewState extends State<TradeVisitTabView>
               height: 600,
               child: TabBarView(
                 controller: _tabController,
-                children: const [
-                  OutletDetails(),
-                  ProductDetailsForm(),
+                children: [
+                  OutletDetails(outletRequestModelResponse: widget.outletRequestModelResponse,),
+                   ProductDetailsForm(outletRequestModelResponse: widget.outletRequestModelResponse,),
                 ],
               ),
             ),
