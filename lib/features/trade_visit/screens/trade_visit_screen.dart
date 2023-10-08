@@ -5,7 +5,9 @@ import 'package:nettapp/features/trade_visit/widgets/trade_visit_tab_view.dart';
 
 class TradeVisitFormScreen extends StatelessWidget {
   final OutletRequestModelResponse outletRequestModelResponse;
-  const TradeVisitFormScreen({super.key, required this.outletRequestModelResponse});
+  final String? dayOfTheWeek;
+  final List<OutletRequestModelResponse>? outletList;
+  const TradeVisitFormScreen({super.key, required this.outletRequestModelResponse, this.dayOfTheWeek, this.outletList});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class TradeVisitFormScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
           const AppBarRow(),
-          TradeVisitTabView(outletRequestModelResponse: outletRequestModelResponse,)],
+          TradeVisitTabView(outletRequestModelResponse: outletRequestModelResponse, dayOfTheWeek: dayOfTheWeek, outletList: outletList,)],
       ),
     );
   }

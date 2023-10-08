@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +8,7 @@ import 'package:nettapp/core/app_colors/app_colors.dart';
 import 'package:nettapp/core/constants/lists.dart';
 import 'package:nettapp/core/widgets/outlined_container.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
+import 'package:nettapp/data/local_storage_data_model/channel/get_all_channel_response_model.dart';
 import 'package:nettapp/data/local_storage_services/local_storage.dart';
 import 'package:nettapp/features/auth/widgets/app_bar_row.dart';
 import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
@@ -25,12 +29,32 @@ class _OutletsScreenState extends State<OutletsScreen> {
   final GlobalKey<FormFieldState> key_1 = GlobalKey<FormFieldState>();
   TextEditingController query = TextEditingController();
   final _controller = Get.put(HomeController());
-  String? city;
-  String? channel;
-  String? subChannel;
+  List<GetAllChannelResponseModel>? subChannel = <GetAllChannelResponseModel>[];
+  List<String> states = <String>[];
+  List<String> cities = <String>[];
+  void getState()async{
+    final location = await LocalCachedData.instance.getAllLocationList();
+    states = location.map((e) => e.state!).toSet().toList();
+    setState(() {});
+  }
+  void getCities()async{
+    final location = await LocalCachedData.instance.getAllLocationList();
+    cities = location.map((e) => e.city!).toSet().toList();
+    if(cities.isEmpty){
+      log("Message");
+    }else{
+      log("Ahh");
+    }
+    setState(() {});
+  }
+
+
   @override
   void initState() {
+    getState();
+    getCities();
     _controller.getAllOutletList();
+
     super.initState();
   }
 
@@ -67,27 +91,37 @@ class _OutletsScreenState extends State<OutletsScreen> {
                           DropDownInput(
                             isMandatory: false,
                             onChanged: (val) {
-                              city = val.name;
+                              _controller.city = val.name;
                             },
                             label: "Filter by City:",
                             enableSearch: true,
-                            options: cities(),
+                            options: cities == [] ? [] : cities.map((e) => DropDownValueModel(name: e, value: e)).toList(),
                           ),
                           DropDownInput(
                               isMandatory: false,
-                              onChanged: (val) {
-                                channel = val.name;
+                              onChanged: (val) async {
+                                _controller.channel = val.name;
+                                if(_controller.channel == "On trade"){
+                                  final data = await LocalCachedData.instance.getAllChannelList();
+                                  subChannel = data.where((e) => e.channel!.toLowerCase() == "on trade").toList();
+                                  setState(() {});
+                                }else if(_controller.channel == "Off trade"){
+                                  final data = await LocalCachedData.instance.getAllChannelList();
+                                  subChannel = data.where((e) => e.channel!.toLowerCase() == "off trade").toList();
+                                  setState(() {});
+                                }
                               },
                               label: "Filter by Channel:",
-                              options: channels),
+                              options: channels
+                          ),
                           DropDownInput(
                             isMandatory: false,
                             onChanged: (val) {
-                              subChannel = val.name;
+                              _controller.subChannel = val.value.toString();
                             },
                             label: "Filter by Sub Channels:",
                             enableSearch: true,
-                            options: subChannels(),
+                            options:  subChannel == [] ? [] : subChannel!.map((e) => DropDownValueModel(name: e.subChannel!, value: e.subChannel)).toList(),
                           ),
                           const SizedBox(
                             height: 20,
@@ -128,6 +162,7 @@ class _OutletsScreenState extends State<OutletsScreen> {
                     onChanged: (val) async {
                       if(query.text.isEmpty){
                         _controller.createdOutletList = await LocalCachedData.instance.getAllCreatedOutletList();
+                        _controller.pendingOutletList = await LocalCachedData.instance.getAllPendingOutletList();
                         setState(() {});
                       }else{
                         final outlet = _controller.createdOutletList.where((restaurants){
@@ -137,6 +172,16 @@ class _OutletsScreenState extends State<OutletsScreen> {
                         }).toList();
                         setState(() {
                           _controller.createdOutletList = outlet;
+                        });
+                        final pendingOutlet = _controller.pendingOutletList.where((restaurants){
+                          final nameLowerCase = restaurants.name!.toLowerCase();
+                          final queryLowerCase = query.text.toLowerCase();
+                          log(queryLowerCase);
+                          log(nameLowerCase);
+                          return nameLowerCase.contains(queryLowerCase);
+                        }).toList();
+                        setState(() {
+                          _controller.pendingOutletList = pendingOutlet;
                         });
                       }
                     },
@@ -176,7 +221,7 @@ class _OutletsScreenState extends State<OutletsScreen> {
                             ],
                           ),
                         ),
-                        controller.createdOutletList.isEmpty ?
+                        controller.createdOutletList.isEmpty  && controller.pendingOutletList.isEmpty?
                         Center(
                           child: Column(
                             children: [
@@ -199,6 +244,16 @@ class _OutletsScreenState extends State<OutletsScreen> {
                                 ),
                               );
                             }),
+                            ...List.generate(controller.pendingOutletList.length, (index){
+                              return GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> OutletTradeVisitDetailsScreen(outletRequestModelResponse: controller.pendingOutletList[index],)));
+                                },
+                                child: OutletItem(
+                                  outletRequestModelResponse: controller.pendingOutletList[index],
+                                ),
+                              );
+                            }),
                           ],
                         )
                       ],
@@ -218,45 +273,80 @@ class _OutletsScreenState extends State<OutletsScreen> {
           showFilter(
               context: context,
             onTap: () async {
-                if(city != null){
+                if(_controller.city != null){
                   await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.city == city).toList();
+                    _controller.createdOutletList = value.where((element) => element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });
-                }else if(channel != null){
-                  await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.channel == channel).toList();
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });
-                }else if(subChannel != null){
+                }else if(_controller.channel != null){
                   await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.subChannel == subChannel).toList();
+                    _controller.createdOutletList = value.where((element) => element.channel?.toLowerCase() == _controller.channel?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });
-                }else if(city != null && channel != null){
-                  await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.channel == channel && element.city == city).toList();
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.channel?.toLowerCase() == _controller.channel?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });
-                }else if(city != null && subChannel != null){
+                }else if(_controller.subChannel != null){
                   await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.subChannel == subChannel && element.city == city).toList();
+                    _controller.createdOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });
-                }else if(subChannel != null && channel != null){
-                  await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.subChannel == subChannel && element.channel == channel).toList();
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });
-                }else if(subChannel != null && channel != null && city != null){
+                }else if(_controller.city != null && _controller.channel != null){
                   await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-                    _controller.createdOutletList = value.where((element) => element.subChannel == subChannel && element.channel == channel && element.city == city).toList();
+                    _controller.createdOutletList = value.where((element) => element.channel?.toLowerCase() == _controller.channel?.toLowerCase() && element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.channel?.toLowerCase() == _controller.channel?.toLowerCase() && element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                }else if(_controller.city != null && _controller.subChannel != null){
+                  await LocalCachedData.instance.getAllCreatedOutletList().then((value){
+                    _controller.createdOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase() && element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase() && element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                }else if(_controller.subChannel != null && _controller.channel != null){
+                  await LocalCachedData.instance.getAllCreatedOutletList().then((value){
+                    _controller.createdOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase() && element.channel?.toLowerCase() == _controller.channel?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase() && element.channel?.toLowerCase() == _controller.channel?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                }else if(_controller.subChannel != null && _controller.channel != null && _controller.city != null){
+                  await LocalCachedData.instance.getAllCreatedOutletList().then((value){
+                    _controller.createdOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase() && element.channel?.toLowerCase() == _controller.channel?.toLowerCase() && element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  });
+                  await LocalCachedData.instance.getAllPendingOutletList().then((value){
+                    _controller.pendingOutletList = value.where((element) => element.subChannel?.toLowerCase() == _controller.subChannel?.toLowerCase() && element.channel?.toLowerCase() == _controller.channel?.toLowerCase() && element.city?.toLowerCase() == _controller.city?.toLowerCase()).toList();
                     setState(() {});
                     Navigator.of(context).pop();
                   });

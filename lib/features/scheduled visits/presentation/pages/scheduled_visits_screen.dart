@@ -83,6 +83,9 @@ class _ScheduledVisitsScreenState extends State<ScheduledVisitsScreen> with Tick
               });
             }
           }
+          formatDateTime({required DateTime date}){
+            return DateFormat('yyyy-MM-dd').parse(DateFormat('yyyy-MM-dd').format(date));
+          }
           return AlertDialog(
             backgroundColor: Colors.white,
             actions: <Widget>[
@@ -106,9 +109,13 @@ class _ScheduledVisitsScreenState extends State<ScheduledVisitsScreen> with Tick
                   if(_controller.createdOutletList.isEmpty || _controller.createdOutletList == []){
                     Get.snackbar("Notice", "Kindly add an outlet to schedule a visit", colorText: AppColors.white, backgroundColor: Colors.red);
                     Navigator.of(context).pop();
+                  }else if(formatDateTime(date: _selectedDate).isBefore(formatDateTime(date: DateTime.now()))){
+                    Get.snackbar("Error", "You cannot schedule visit with past date", colorText: AppColors.white, backgroundColor: Colors.red);
+                    Navigator.of(context).pop();
                   }else if(_controller.createdOutletList.isNotEmpty || _controller.createdOutletList != [] && daysOfWeek != null && selectedOutletCode != null){
-                    final index = _controller.createdOutletList.indexWhere((element) => element.outletCode == selectedOutletCode.toString());
+                    final index = _controller.createdOutletList.indexWhere((element) => element.outletcode == selectedOutletCode.toString());
                     final value = _controller.createdOutletList[index];
+                        value.lastvisit = _selectedDate;
                     if(daysOfWeek == "MON"){
                       _controller.outletsWithMondayScheduledVisit.add(value);
                       _controller.saveAllMondaySchedule(mondaySchedule: _controller.outletsWithMondayScheduledVisit);
@@ -188,7 +195,7 @@ class _ScheduledVisitsScreenState extends State<ScheduledVisitsScreen> with Tick
                           selectedOutletCode = val.value.toString();
                         },
                         label: "Select outlet",
-                        options: _controller.createdOutletList.map((e) => DropDownValueModel(name: e.name.toString(), value: e.outletCode.toString())).toList(),
+                        options: _controller.createdOutletList.map((e) => DropDownValueModel(name: e.name.toString(), value: e.outletcode.toString())).toList(),
                         isMandatory: true),
                     const SizedBox(height: 8,),
                     const Padding(

@@ -1,4 +1,6 @@
-
+// To parse this JSON data, do
+//
+//     final outletRequestModelResponse = outletRequestModelResponseFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -8,7 +10,7 @@ String outletRequestModelResponseToJson(List<OutletRequestModelResponse> data) =
 
 class OutletRequestModelResponse {
   String? name;
-  String? outletCode;
+  String? outletcode;
   String? address;
   String? state;
   String? region;
@@ -18,12 +20,12 @@ class OutletRequestModelResponse {
   String? managerName;
   String? managerPhoneNumber;
   String? supplierName;
-  String? userCode;
+  String? usercode;
   DateTime? lastvisit;
 
   OutletRequestModelResponse({
     this.name,
-    this.outletCode,
+    this.outletcode,
     this.address,
     this.state,
     this.region,
@@ -33,13 +35,13 @@ class OutletRequestModelResponse {
     this.managerName,
     this.managerPhoneNumber,
     this.supplierName,
-    this.userCode,
+    this.usercode,
     this.lastvisit,
   });
 
   factory OutletRequestModelResponse.fromJson(Map<String, dynamic> json) => OutletRequestModelResponse(
     name: json["name"],
-    outletCode: json["outletCode"],
+    outletcode: json["outletcode"],
     address: json["address"],
     state: json["state"],
     region: json["region"],
@@ -49,13 +51,13 @@ class OutletRequestModelResponse {
     managerName: json["managerName"],
     managerPhoneNumber: json["managerPhoneNumber"],
     supplierName: json["supplierName"],
-    userCode: json["userCode"],
+    usercode: json["usercode"],
     lastvisit: json["lastvisit"] == null ? null : DateTime.parse(json["lastvisit"]),
   );
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "outletCode": outletCode,
+    "outletcode": outletcode,
     "address": address,
     "state": state,
     "region": region,
@@ -65,7 +67,7 @@ class OutletRequestModelResponse {
     "managerName": managerName,
     "managerPhoneNumber": managerPhoneNumber,
     "supplierName": supplierName,
-    "userCode": userCode,
+    "usercode": usercode,
     "lastvisit": lastvisit?.toIso8601String(),
   };
 }

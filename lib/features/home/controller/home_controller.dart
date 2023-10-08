@@ -22,7 +22,7 @@ import 'package:nettapp/features/trade_visit/widgets/loader.dart';
 import 'package:uuid/uuid.dart';
 
 class HomeController extends GetxController{
-
+  String region = "";
   Future<void> getAllCategory()async{
     try{
       final response = await NetworkProvider().call(path: "/getAllCategories", method: RequestMethod.get);
@@ -80,11 +80,11 @@ class HomeController extends GetxController{
       final response = await NetworkProvider().call(path: "/tradeVisit", method: RequestMethod.post, body: body);
       final data = SuccessResponseModel.fromJson(json.decode(response?.data));
       log(data.status.toString());
-      if(data.status.toString() == "201" || data.status.toString() == "200"){
+      if(data.status == 201 || data.status == 200){
         await syncOutlets();
       }else{
         Get.back();
-        Get.snackbar("Error", response?.data["message"], colorText: AppColors.white, backgroundColor: Colors.red);
+        Get.snackbar("Error", data.message ?? "Sync failed", colorText: AppColors.white, backgroundColor: Colors.red);
       }
       update();
     }on DioException catch (err) {
@@ -99,18 +99,18 @@ class HomeController extends GetxController{
     }
   }
 
-  List<OutletRequestModelResponse> outletVisit = <OutletRequestModelResponse>[];
+  List<OutletRequestModelResponse> pendingOutlets = <OutletRequestModelResponse>[];
   Future<void> syncOutlets()async{
-    await LocalCachedData.instance.getAllCreatedOutletList().then((value){
-      outletVisit = value;
+    await LocalCachedData.instance.getAllPendingOutletList().then((value){
+      pendingOutlets = value;
     });
     try{
       final body = json.encode([
-        ...outletVisit,
+        ...pendingOutlets,
       ]);
       final response = await NetworkProvider().call(path: "/createOutlet", method: RequestMethod.post, body: body);
       final data = SuccessResponseModel.fromJson(json.decode(response?.data));
-      if(data.status.toString() == "201" || data.status.toString() == "200"){
+      if(data.status == 201 || data.status == 200){
         await syncScheduledVisit();
       }else{
         Get.back();
@@ -139,10 +139,10 @@ class HomeController extends GetxController{
     if(mondayVisitList.isNotEmpty){
       for (var element in mondayVisitList) {
         mondayList.add(ScheduleVisitResponseModel(
-            outletCode: element.outletCode,
+            outletCode: element.outletcode,
             date: element.lastvisit,
             day: "MON",
-            userCode: element.userCode
+            userCode: element.usercode
         ));
       }
     }
@@ -150,10 +150,10 @@ class HomeController extends GetxController{
     if(tuesdayVisit.isNotEmpty){
       for (var element in tuesdayVisit) {
         tuesdayList.add(ScheduleVisitResponseModel(
-            outletCode: element.outletCode,
+            outletCode: element.outletcode,
             date: element.lastvisit,
             day: "TUE",
-            userCode: element.userCode
+            userCode: element.usercode
         ));
       }
     }
@@ -161,10 +161,10 @@ class HomeController extends GetxController{
     if(wednesdayVisit.isNotEmpty){
       for (var element in wednesdayVisit) {
         wednesdayList.add(ScheduleVisitResponseModel(
-            outletCode: element.outletCode,
+            outletCode: element.outletcode,
             date: element.lastvisit,
             day: "WED",
-            userCode: element.userCode
+            userCode: element.usercode
         ));
       }
     }
@@ -172,10 +172,10 @@ class HomeController extends GetxController{
     if(thursdayVisit.isNotEmpty){
       for (var element in thursdayVisit) {
         thursdayList.add(ScheduleVisitResponseModel(
-            outletCode: element.outletCode,
+            outletCode: element.outletcode,
             date: element.lastvisit,
             day: "THU",
-            userCode: element.userCode
+            userCode: element.usercode
         ));
       }
     }
@@ -183,10 +183,10 @@ class HomeController extends GetxController{
     if(fridayVisit.isNotEmpty){
       for (var element in fridayVisit) {
         fridayList.add(ScheduleVisitResponseModel(
-            outletCode: element.outletCode,
+            outletCode: element.outletcode,
             date: element.lastvisit,
             day: "FRI",
-            userCode: element.userCode
+            userCode: element.usercode
         ));
       }
     }
@@ -200,12 +200,12 @@ class HomeController extends GetxController{
       ]);
       final response = await NetworkProvider().call(path: "/schedulevisit", method: RequestMethod.post, body: body);
       final data = SuccessResponseModel.fromJson(json.decode(response?.data));
-      if(data.status.toString() == "201" || data.status.toString() == "200"){
+      if(data.status == 201 || data.status == 200){
         Get.back();
         Get.snackbar("Success", data.message ?? "All records saved successfully", colorText: AppColors.white, backgroundColor: Colors.green);
       }else{
         Get.back();
-        Get.snackbar("Error", response?.data["message"], colorText: AppColors.white, backgroundColor: Colors.red);
+        Get.snackbar("Error", data.message ?? "Sync failed", colorText: AppColors.white, backgroundColor: Colors.red);
       }
       update();
     }on DioException catch (err) {
@@ -235,7 +235,7 @@ class HomeController extends GetxController{
     Future.delayed(const Duration(seconds: 6), () async {
       OutletRequestModelResponse outletRequestModelResponse = OutletRequestModelResponse();
       outletRequestModelResponse.name = name;
-      outletRequestModelResponse.outletCode = uuid.v4();
+      outletRequestModelResponse.outletcode = uuid.v4();
       outletRequestModelResponse.address = address;
       outletRequestModelResponse.state = state;
       outletRequestModelResponse.region = region;
@@ -245,11 +245,11 @@ class HomeController extends GetxController{
       outletRequestModelResponse.managerName = managerName;
       outletRequestModelResponse.managerPhoneNumber = managerPhoneNumber;
       outletRequestModelResponse.supplierName = supplierName;
-      outletRequestModelResponse.userCode = uuid.v4();
+      outletRequestModelResponse.usercode = uuid.v4();
       outletRequestModelResponse.lastvisit = DateTime.now();
-      final createdOutletList = await LocalCachedData.instance.getAllCreatedOutletList();
-      createdOutletList.add(outletRequestModelResponse);
-      await LocalCachedData.instance.cacheAllCreatedOutletList(createdOutletList).then((value){
+      final createdPendingOutletList = await LocalCachedData.instance.getAllPendingOutletList();
+      createdPendingOutletList.add(outletRequestModelResponse);
+      await LocalCachedData.instance.cacheAllPendingOutletList(createdPendingOutletList).then((value){
         Get.back();
         showAlert(Get.context, (){
           state = null; city = null; channel = null; subChannel = null;name = null;
@@ -258,8 +258,8 @@ class HomeController extends GetxController{
           Navigator.pushReplacement(Get.context!, MaterialPageRoute(builder: (context)=> const BottomNavBarWidget()));
           update();
         }, () async {
-          final outletList = await LocalCachedData.instance.getAllCreatedOutletList();
-          final index = outletList.indexWhere((element) => element.outletCode == outletRequestModelResponse.outletCode);
+          final outletList = await LocalCachedData.instance.getAllPendingOutletList();
+          final index = outletList.indexWhere((element) => element.outletcode == outletRequestModelResponse.outletcode);
           final data = outletList[index];
           Navigator.of(Get.context!).pop();
           Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> TradeVisitFormScreen(outletRequestModelResponse: data,)));
@@ -270,12 +270,18 @@ class HomeController extends GetxController{
 
    final totalNumberOfRegisteredOutlets = 0.obs;
   List<OutletRequestModelResponse> createdOutletList = <OutletRequestModelResponse>[];
+  List<OutletRequestModelResponse> pendingOutletList = <OutletRequestModelResponse>[];
   void getAllOutletList() async {
     await LocalCachedData.instance.getAllCreatedOutletList().then((value){
       createdOutletList = value;
-      totalNumberOfRegisteredOutlets.value = value.length;
       update();
     });
+    await LocalCachedData.instance.getAllPendingOutletList().then((value){
+      pendingOutletList = value;
+      update();
+    });
+    totalNumberOfRegisteredOutlets.value = createdOutletList.length + pendingOutletList.length;
+    update();
   }
 
 
@@ -356,8 +362,10 @@ class HomeController extends GetxController{
       if(response?.statusCode.toString() == "200" || response?.statusCode.toString() == "201"){
         List<OutletRequestModelResponse> allCreatedOutlet = List<OutletRequestModelResponse>.from(json.decode(response?.data).map((x) => OutletRequestModelResponse.fromJson(x)));
         if(allCreatedOutlet.isEmpty){
+          log("This the outlets length ${allCreatedOutlet.length}" );
           null;
         }else{
+          log("This the outlets length ${allCreatedOutlet.length}" );
          await LocalCachedData.instance.cacheAllCreatedOutletList(allCreatedOutlet);
         }
       }else{

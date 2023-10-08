@@ -8,7 +8,9 @@ import 'package:nettapp/features/trade_visit/widgets/product_details_form.dart';
 
 class TradeVisitTabView extends StatefulWidget {
   final OutletRequestModelResponse outletRequestModelResponse;
-  const TradeVisitTabView({super.key, required this.outletRequestModelResponse});
+  final String? dayOfTheWeek;
+  final List<OutletRequestModelResponse>? outletList;
+  const TradeVisitTabView({super.key, required this.outletRequestModelResponse, this.dayOfTheWeek, this.outletList});
 
   @override
   State<TradeVisitTabView> createState() => _TradeVisitTabViewState();
@@ -61,7 +63,7 @@ class _TradeVisitTabViewState extends State<TradeVisitTabView>
                 controller: _tabController,
                 children: [
                   OutletDetails(outletRequestModelResponse: widget.outletRequestModelResponse,),
-                   ProductDetailsForm(outletRequestModelResponse: widget.outletRequestModelResponse,),
+                   ProductDetailsForm(outletRequestModelResponse: widget.outletRequestModelResponse, dayOfTheWeek: widget.dayOfTheWeek, outletList: widget.outletList,),
                 ],
               ),
             ),

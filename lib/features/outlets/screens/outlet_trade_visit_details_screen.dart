@@ -60,7 +60,10 @@ class _OutletTradeVisitDetailsScreenState extends State<OutletTradeVisitDetailsS
                   height: 500,
                   child: TabBarView(
                     controller: _tabController,
-                    children: [OutletDetails(outletRequestModelResponse: widget.outletRequestModelResponse!,), TradeVisitDetailsWidget(outletRequestModelResponse: widget.outletRequestModelResponse!,)],
+                    children: [
+                      OutletDetails(outletRequestModelResponse: widget.outletRequestModelResponse!,),
+                      TradeVisitDetailsWidget(outletRequestModelResponse: widget.outletRequestModelResponse!,)
+                    ],
                   ),
                 ),
                 SizedBox(

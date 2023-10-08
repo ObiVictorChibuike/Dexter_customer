@@ -9,11 +9,12 @@ import 'package:nettapp/data/local_storage_data_model/auth/login/login_response_
 import 'package:nettapp/data/local_storage_services/local_storage.dart';
 import 'package:nettapp/features/home/controller/home_controller.dart';
 import 'package:nettapp/features/home/widgets/bottom_nav_bar.dart';
+import 'package:nettapp/features/scheduled%20visits/controller/controller.dart';
 import 'package:nettapp/features/trade_visit/widgets/loader.dart';
 import 'package:flutter/material.dart';
 
 class AuthController extends GetxController{
-
+  final visitController = Get.put(VisitController());
   final homeController = Get.put(HomeController());
   Future<void> internetLogin({required String email, required String password}) async {
     Loader.progressIndicator(Get.context!);
@@ -30,12 +31,17 @@ class AuthController extends GetxController{
         loginDataModel.emailAddress = email;
         await LocalCachedData.instance.cacheUserCode(userCode: data.userCode.toString());
         await LocalCachedData.instance.cacheLoginModel(loginDataModel: loginDataModel);
-        await LocalCachedData.instance.cacheFirstTimeUserStatus(firstTimeUser: false).then((value){
-          homeController.getAllCategory();
-          homeController.getAllChannel();
-          homeController.getAllLocation();
-          homeController.getAllOutletsFromRemoteServer();
-          homeController.getAllTradeVisitFromRemoteServer();
+        await LocalCachedData.instance.cacheFirstTimeUserStatus(firstTimeUser: false).then((value) async {
+          await homeController.getAllCategory();
+          await homeController.getAllChannel();
+          await homeController.getAllLocation();
+          await homeController.getAllOutletsFromRemoteServer();
+          await homeController.getAllTradeVisitFromRemoteServer();
+          await homeController.syncSchedulesFromRemoteServer();
+          await visitController.getOutletScheduleList();
+           homeController.getAllOutletList();
+           visitController.getCompletedTradeVisitList();
+          visitController.getPendingVisits();
           Get.back();
           Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> const BottomNavBarWidget()));
         });
@@ -63,8 +69,16 @@ class AuthController extends GetxController{
     final loginData = await LocalCachedData.instance.fetchLoginModel();
     Future.delayed(const Duration(seconds: 5), () async {
       if(loginData.emailAddress?.trim() == email.trim() && loginData.password?.trim() == password.trim()){
-        homeController.getAllOutletsFromRemoteServer();
-        homeController.getAllTradeVisitFromRemoteServer();
+        await homeController.getAllCategory();
+        await homeController.getAllChannel();
+        await homeController.getAllLocation();
+        await homeController.getAllOutletsFromRemoteServer();
+        await homeController.getAllTradeVisitFromRemoteServer();
+        await homeController.syncSchedulesFromRemoteServer();
+        await visitController.getOutletScheduleList();
+         homeController.getAllOutletList();
+        visitController.getCompletedTradeVisitList();
+        visitController.getPendingVisits();
         Get.back();
         await LocalCachedData.instance.cacheFirstTimeUserStatus(firstTimeUser: false);
         Navigator.push(Get.context!, MaterialPageRoute(builder: (context)=> const BottomNavBarWidget()));

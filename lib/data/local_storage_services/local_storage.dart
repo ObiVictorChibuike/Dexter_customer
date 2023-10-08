@@ -137,6 +137,23 @@ class LocalCachedData{
   }
 
 
+  Future<void> cacheAllPendingOutletList(List<OutletRequestModelResponse> list) async {
+    final List<Map<String, dynamic>> jsonList = list.map((item) => item.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await _prefs.setString('pending_outletList', jsonString);
+  }
+
+  Future<List<OutletRequestModelResponse>> getAllPendingOutletList() async {
+    final jsonString = _prefs.getString('pending_outletList');
+    if (jsonString != null) {
+      final List<dynamic> jsonList = jsonDecode(jsonString);
+      final List<OutletRequestModelResponse> categoryList = jsonList.map((item) => OutletRequestModelResponse.fromJson(item)).toList();
+      return categoryList;
+    }
+    return [];
+  }
+
+
   ///Monday Schedule
   Future<void> cacheMondayScheduledVisit(List<OutletRequestModelResponse> list) async {
     final List<Map<String, dynamic>> jsonList = list.map((item) => item.toJson()).toList();
@@ -215,6 +232,23 @@ class LocalCachedData{
 
   Future<List<OutletRequestModelResponse>> getFridayScheduledVisit() async {
     final jsonString = _prefs.getString('friday_schedule');
+    if (jsonString != null) {
+      final List<dynamic> jsonList = jsonDecode(jsonString);
+      final List<OutletRequestModelResponse> categoryList = jsonList.map((item) => OutletRequestModelResponse.fromJson(item)).toList();
+      return categoryList;
+    }
+    return [];
+  }
+
+
+  Future<void> cacheCompletedVisitAndSchedule(List<OutletRequestModelResponse> list) async {
+    final List<Map<String, dynamic>> jsonList = list.map((item) => item.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await _prefs.setString('completed_visit', jsonString);
+  }
+
+  Future<List<OutletRequestModelResponse>> getCompletedVisitAndSchedule() async {
+    final jsonString = _prefs.getString('completed_visit');
     if (jsonString != null) {
       final List<dynamic> jsonList = jsonDecode(jsonString);
       final List<OutletRequestModelResponse> categoryList = jsonList.map((item) => OutletRequestModelResponse.fromJson(item)).toList();

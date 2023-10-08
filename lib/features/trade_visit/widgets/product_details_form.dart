@@ -4,10 +4,12 @@ import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nettapp/core/app_colors/app_colors.dart';
+import 'package:nettapp/core/constants/lists.dart';
 import 'package:nettapp/core/widgets/text_widget.dart';
 import 'package:nettapp/data/local_storage_data_model/outlets/local_storage_outlet_model.dart';
 import 'package:nettapp/data/local_storage_services/local_storage.dart';
 import 'package:nettapp/features/auth/widgets/blue_button_widget.dart';
+import 'package:nettapp/features/home/controller/home_controller.dart';
 import 'package:nettapp/features/outlets/widgets/drop_down_widget.dart';
 import 'package:nettapp/features/outlets/widgets/form_input_field.dart';
 import 'package:nettapp/features/outlets/widgets/horizontal_line.dart';
@@ -20,8 +22,10 @@ import 'loader.dart';
 
 class ProductDetailsForm extends StatefulWidget {
   final OutletRequestModelResponse? outletRequestModelResponse;
+  final String? dayOfTheWeek;
+  final List<OutletRequestModelResponse>? outletList;
   const ProductDetailsForm({
-    super.key, this.outletRequestModelResponse,
+    super.key, this.outletRequestModelResponse, this.dayOfTheWeek, this.outletList,
   });
 
   @override
@@ -45,6 +49,7 @@ class _ProductDetailsFormState extends State<ProductDetailsForm> {
   bool? isNew;
   bool? hasPriceChanged;
   final _controller = Get.find<VisitController>();
+  final homeController = Get.put(HomeController());
   @override
   void initState() {
     _controller.getAllCategoryList();
@@ -293,13 +298,39 @@ class _ProductDetailsFormState extends State<ProductDetailsForm> {
                                       "${formatTime(minutes)}minutes" : formatTime(seconds).toString() != "00" ?
                                       "${formatTime(seconds)}seconds" : "00seconds",
                                       listing: _isNewListing == true ? "Yes" : "No",
-                                      outletCode: widget.outletRequestModelResponse?.outletCode ?? "",
+                                      outletCode: widget.outletRequestModelResponse?.outletcode ?? "",
                                       priceChange: _isPriceChanged == true ? "Yes" : "No",
                                       sku: sku.toString(),
                                       userCode: userCode!,
                                       visitCode: uuid.v4(),
                                       outletName: widget.outletRequestModelResponse?.name ?? "",
                                     );
+                                    if(widget.dayOfTheWeek == "MON"){
+                                      widget.outletList?.removeWhere((element) => element.outletcode == widget.outletRequestModelResponse?.outletcode);
+                                      homeController.saveAllMondaySchedule(mondaySchedule: widget.outletList!);
+                                      setState(() {});
+                                      Get.snackbar("Success", "Delete Successful", colorText: Colors.white, backgroundColor: Colors.green);
+                                    }else if(widget.dayOfTheWeek  == "TUE"){
+                                      widget.outletList?.removeWhere((element) => element.outletcode == widget.outletRequestModelResponse?.outletcode);
+                                      homeController.saveAllTuesdaySchedule(tuesdaySchedule: widget.outletList!);
+                                      setState(() {});
+                                      Get.snackbar("Success", "Delete Successful", colorText: Colors.white, backgroundColor: Colors.green);
+                                    }else if(widget.dayOfTheWeek  == "WED"){
+                                      widget.outletList?.removeWhere((element) => element.outletcode == widget.outletRequestModelResponse?.outletcode);
+                                      homeController.saveAllWednesdaySchedule(wednesdaySchedule: widget.outletList!);
+                                      setState(() {});
+                                      Get.snackbar("Success", "Delete Successful", colorText: Colors.white, backgroundColor: Colors.green);
+                                    }else if(widget.dayOfTheWeek  == "THU"){
+                                      widget.outletList?.removeWhere((element) => element.outletcode == widget.outletRequestModelResponse?.outletcode);
+                                      homeController.saveAllThursdaySchedule(thursdaySchedule: widget.outletList!);
+                                      setState(() {});
+                                      Get.snackbar("Success", "Delete Successful", colorText: Colors.white, backgroundColor: Colors.green);
+                                    }else if(widget.dayOfTheWeek  == "FRI"){
+                                      widget.outletList?.removeWhere((element) => element.outletcode == widget.outletRequestModelResponse?.outletcode);
+                                      homeController.saveAllFridaySchedule(fridaySchedule: widget.outletList!);
+                                      setState(() {});
+                                      Get.snackbar("Success", "Delete Successful", colorText: Colors.white, backgroundColor: Colors.green);
+                                    }
                                   });
                                 }
                               }

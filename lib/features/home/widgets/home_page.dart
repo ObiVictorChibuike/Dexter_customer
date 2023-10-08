@@ -118,6 +118,8 @@ class _HomePageState extends State<HomePage> {
           onRefresh: ()async{
             visitController.getOutletScheduleList();
             _controller.getAllOutletList();
+            visitController.getCompletedTradeVisitList();
+            visitController.getPendingVisits();
           },
           child: Scaffold(
             body: Padding(

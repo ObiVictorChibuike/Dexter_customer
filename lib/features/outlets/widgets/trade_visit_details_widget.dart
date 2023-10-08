@@ -18,7 +18,7 @@ class _TradeVisitDetailsWidgetState extends State<TradeVisitDetailsWidget> {
   List<ListTradeVisitResponseModel>? tradeVisitList = <ListTradeVisitResponseModel>[];
   void getTradeVisitList()async{
     final data = await LocalCachedData.instance.getAllTradeVisitList();
-    tradeVisitList  = data.where((element) => element.outletCode.toString() == widget.outletRequestModelResponse.outletCode.toString()).toList();
+    tradeVisitList  = data.where((element) => element.outletCode.toString() == widget.outletRequestModelResponse.outletcode.toString()).toList();
     log(tradeVisitList!.length.toString());
     setState(() {});
   }

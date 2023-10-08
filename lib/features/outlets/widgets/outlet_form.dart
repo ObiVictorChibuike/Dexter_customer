@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,7 +56,6 @@ class _OutletFormState extends State<OutletForm> {
     return GetBuilder<HomeController>(
       init: HomeController(),
         builder: (controller){
-          String region = "";
       return OutlinedContainer(
         content: Form(
           key: formKey,
@@ -112,13 +110,13 @@ class _OutletFormState extends State<OutletForm> {
               ),
               DropDownInput(
                 isMandatory: true,
-                onChanged: (val) async {
+                onChanged: (val)  async{
+                  controller.state = val.value.toString();
                  await LocalCachedData.instance.getAllLocationList().then((value){
-                    setState(() async {
-                      final states = value.map((element) => element.state).toList();
-                      final index = states.indexWhere((element) => element!.toLowerCase() == val.value.toString().toLowerCase());
-                      region = value[index].region ?? "";
-                      log(region);
+                    setState(() {
+                      final index = value.indexWhere((element) => element.state!.toLowerCase() == val.value.toString().toLowerCase());
+                      controller.region = value[index].region ?? "";
+                      log(controller.region.toString());
                     });
                   });
                 },
@@ -145,15 +143,14 @@ class _OutletFormState extends State<OutletForm> {
                   ),
                   child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, top: 12),
-                      child: TextWidget(text: region
-                      // getRegion(controller.state)
+                      child: TextWidget(text: controller.region
                       )),
                 ),
               ),
               DropDownInput(
                 isMandatory: true,
                 onChanged: (val) {
-                  controller.city = val.name;
+                  controller.city = val.value;
                 },
                 label: "City",
                 enableSearch: true,
@@ -162,7 +159,7 @@ class _OutletFormState extends State<OutletForm> {
               DropDownInput(
                   isMandatory: true,
                   onChanged: (val) async {
-                    controller.channel = val.name;
+                    controller.channel = val.value;
                     if(controller.channel == "On trade"){
                       final data = await LocalCachedData.instance.getAllChannelList();
                       subChannel = data.where((e) => e.channel!.toLowerCase() == "on trade").toList();
@@ -179,7 +176,7 @@ class _OutletFormState extends State<OutletForm> {
               DropDownInput(
                 isMandatory: true,
                 onChanged: (val) {
-                  controller.subChannel = val.name;
+                  controller.subChannel = val.value;
                   setState(() {});
                 },
                 label: "Sub Channels",
@@ -230,18 +227,18 @@ class _OutletFormState extends State<OutletForm> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: BlueButtonWidget(
                     onTap: () async {
-                      final outletList = await LocalCachedData.instance.getAllCreatedOutletList();
+                      final outletList = await LocalCachedData.instance.getAllPendingOutletList();
                       final list = outletList.map((element) => element.name?.toLowerCase()).toList();
                       if(controller.name != null && controller.name != "" && list.contains(controller.name!.toLowerCase())){
                         Get.snackbar("Error", "Outlet already exist", backgroundColor: Colors.red, colorText: Colors.white);
                       }else if(controller.name != null && controller.name != "" && !list.contains(controller.name!.toLowerCase())){
-                        if(region == ""){
+                        if(controller.region == ""){
                           Get.snackbar("Error", "Please select a state and region", colorText: AppColors.white, backgroundColor: Colors.red);
                         } else{
                           if(formKey.currentState!.validate()){
                             Loader.progressIndicator(Get.context);
                             Future.delayed(const Duration(seconds: 5), () async {
-                              await controller.createOutlet(region: getRegion(controller.state));
+                              await controller.createOutlet(region: controller.region);
                             });
                           }
                         }
